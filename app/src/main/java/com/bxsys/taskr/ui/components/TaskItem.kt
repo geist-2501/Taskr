@@ -16,7 +16,7 @@ import com.bxsys.taskr.ui.theme.TaskrTheme
 fun TaskItem(
     modifier: Modifier = Modifier,
     task: Task,
-    onDone: (Task) -> Unit
+    onCloseTask: (Task) -> Unit
 ) {
     Card(modifier.fillMaxWidth()) {
         Row(
@@ -25,7 +25,7 @@ fun TaskItem(
         ) {
             Text(task.content)
             Spacer(modifier = Modifier.weight(1f))
-            IconButton(onClick = { onDone(task) }) {
+            IconButton(onClick = { onCloseTask(task) }) {
                 Icon(Icons.Default.Close, contentDescription = "Close")
             }
         }
@@ -36,6 +36,6 @@ fun TaskItem(
 @Composable
 private fun PreviewTaskItem() {
     TaskrTheme {
-        TaskItem(task = Task(1, "Task item"), onDone = {})
+        TaskItem(task = Task(1, "Task item"), onCloseTask = {})
     }
 }

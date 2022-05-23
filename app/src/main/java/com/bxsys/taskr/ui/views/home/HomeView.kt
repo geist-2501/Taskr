@@ -7,10 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bxsys.taskr.MainViewModel
-import com.bxsys.taskr.data.getDummyTaskData
 import com.bxsys.taskr.model.Task
 import com.bxsys.taskr.ui.components.TaskCreator
 import com.bxsys.taskr.ui.components.TaskList
@@ -26,13 +24,11 @@ fun HomeView(
             Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),
-            onDone = {
-
-            }
+            onNewTask = homeViewModel::handleNewTask
         )
         TaskList(
             tasks = homeViewModel.tasks,
-            onCloseTask = { task -> homeViewModel.tasks.remove(task) }
+            onCloseTask = homeViewModel::handleRemoveTask
         )
     }
 }

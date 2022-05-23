@@ -22,7 +22,7 @@ fun TaskList(
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         items(tasks) { task ->
-            TaskItem(task = task, onDone = onCloseTask)
+            TaskItem(task = task, onCloseTask = onCloseTask)
         }
     }
 }

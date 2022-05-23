@@ -8,11 +8,12 @@ import androidx.compose.material.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.bxsys.taskr.model.Task
 
 @Composable
 fun TaskCreator(
     modifier: Modifier = Modifier,
-    onDone: () -> Unit
+    onNewTask: (Task) -> Unit
 ) {
     var text by remember { mutableStateOf("") }
     Row(modifier = modifier) {
@@ -21,7 +22,11 @@ fun TaskCreator(
             value = text,
             onValueChange = { text = it },
             label = { Text("New Task") },
-            keyboardActions = KeyboardActions(onDone = { onDone() })
+            singleLine = true,
+            keyboardActions = KeyboardActions(onDone = {
+                onNewTask(Task(content = text))
+                text = ""
+            })
         )
     }
 }
@@ -29,5 +34,5 @@ fun TaskCreator(
 @Preview
 @Composable
 private fun PreviewTaskCreator() {
-    TaskCreator(onDone = { })
+    TaskCreator(onNewTask = { })
 }
