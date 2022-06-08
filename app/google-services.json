@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "472425544538",
+    "project_id": "taskr-d0ee4",
+    "storage_bucket": "taskr-d0ee4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:472425544538:android:cbdb7ac4f9df2f1b21d163",
+        "android_client_info": {
+          "package_name": "com.bxsys.taskr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "472425544538-dvaiakr0vp8c7vmplp1uml5me3bmhno8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1P3YW5iZ9nP-kiGfgAsqhWqyEvVa7Ic8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "472425544538-dvaiakr0vp8c7vmplp1uml5me3bmhno8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

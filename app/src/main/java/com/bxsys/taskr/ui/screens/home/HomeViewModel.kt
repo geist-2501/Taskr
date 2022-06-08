@@ -1,11 +1,11 @@
-package com.bxsys.taskr
+package com.bxsys.taskr.ui.screens.home
 
 import androidx.compose.runtime.toMutableStateList
-import androidx.lifecycle.ViewModel
+import com.bxsys.taskr.TaskrViewModel
 import com.bxsys.taskr.data.getDummyTaskData
 import com.bxsys.taskr.model.Task
 
-class MainViewModel: ViewModel() {
+class HomeViewModel : TaskrViewModel() {
     var tasks = getDummyTaskData().toMutableStateList()
 
     fun handleNewTask(task: Task) {
