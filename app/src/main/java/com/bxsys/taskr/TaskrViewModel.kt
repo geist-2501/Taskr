@@ -1,11 +1,20 @@
 package com.bxsys.taskr
 
-import androidx.compose.runtime.toMutableStateList
+import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.bxsys.taskr.data.getDummyTaskData
-import com.bxsys.taskr.model.Task
+import kotlinx.coroutines.CoroutineExceptionHandler
 
 // Tends to only have the log service.
 open class TaskrViewModel: ViewModel() {
+    open val showErrorExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        onError(throwable)
+    }
 
+    open val logErrorExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        TODO("Implement logger")
+    }
+
+    open fun onError(error: Throwable) {
+        Log.e("e", error.message, error)
+    }
 }

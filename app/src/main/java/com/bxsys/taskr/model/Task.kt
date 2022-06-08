@@ -1,3 +1,9 @@
 package com.bxsys.taskr.model
 
-data class Task(val id: Int? = null, val content: String)
+import java.util.*
+
+data class Task(
+    val id: String = UUID.randomUUID().toString(),
+    val content: String = "",
+    val userId: String = ""
+)

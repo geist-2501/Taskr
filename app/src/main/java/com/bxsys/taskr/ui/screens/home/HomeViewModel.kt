@@ -1,18 +1,54 @@
 package com.bxsys.taskr.ui.screens.home
 
-import androidx.compose.runtime.toMutableStateList
+import androidx.compose.runtime.mutableStateListOf
+import androidx.lifecycle.viewModelScope
 import com.bxsys.taskr.TaskrViewModel
-import com.bxsys.taskr.data.getDummyTaskData
 import com.bxsys.taskr.model.Task
+import com.bxsys.taskr.model.service.api.ITaskService
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeViewModel : TaskrViewModel() {
-    var tasks = getDummyTaskData().toMutableStateList()
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val taskService: ITaskService
+) : TaskrViewModel() {
 
-    fun handleNewTask(task: Task) {
-        tasks.add(task)
+    var tasks = mutableStateListOf<Task>()
+        private set
+
+    fun addListener() {
+        viewModelScope.launch(showErrorExceptionHandler) {
+            taskService.addListener(::handleTasksChanged, ::onError)
+        }
     }
 
-    fun handleRemoveTask(task: Task) {
-        tasks.remove(task)
+    fun removeListener() {
+        viewModelScope.launch(showErrorExceptionHandler) { taskService.removeListener() }
+    }
+
+    fun handleNewTaskClick(task: Task) {
+        viewModelScope.launch(showErrorExceptionHandler) {
+            taskService.saveTask(task) { error ->
+                if (error != null) onError(error)
+            }
+        }
+    }
+
+    fun handleDeleteTaskClick(task: Task) {
+        viewModelScope.launch(showErrorExceptionHandler) {
+            taskService.deleteTask(task.id) { error ->
+                if (error != null) onError(error)
+            }
+        }
+    }
+
+    private fun handleTasksChanged(wasDocDeleted: Boolean, task: Task) {
+        if (wasDocDeleted) {
+            tasks.remove(task)
+        } else {
+            val taskIdx = tasks.indexOfFirst { it.id == task.id }
+            if (taskIdx < 0) tasks.add(task) else tasks[taskIdx] = task
+        }
     }
 }

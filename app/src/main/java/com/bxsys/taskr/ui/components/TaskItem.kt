@@ -36,6 +36,6 @@ fun TaskItem(
 @Composable
 private fun PreviewTaskItem() {
     TaskrTheme {
-        TaskItem(task = Task(1, "Task item"), onCloseTask = {})
+        TaskItem(task = Task("1", "Task item"), onCloseTask = {})
     }
 }
