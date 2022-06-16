@@ -76,10 +76,10 @@ fun Footer(
     Text("ver. $versionNum", color = color)
 }
 
-//@Preview
-//@Composable
-//private fun PreviewSplashScreen() {
-//    TaskrTheme {
-//        SplashScreen(navFromTo = {_, _ -> }, viewModel = MockSplashViewModel())
-//    }
-//}
+@Preview
+@Composable
+private fun PreviewSplashScreen() {
+    TaskrTheme {
+        SplashScreen(navFromTo = {_, _ -> }, viewModel = MockSplashViewModel())
+    }
+}

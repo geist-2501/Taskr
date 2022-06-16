@@ -4,6 +4,8 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.viewModelScope
 import com.bxsys.taskr.TaskrViewModel
 import com.bxsys.taskr.model.Task
+import com.bxsys.taskr.model.service.api.ILogService
+import com.bxsys.taskr.model.service.api.ISnackbarService
 import com.bxsys.taskr.model.service.api.ITaskService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -11,8 +13,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val taskService: ITaskService
-) : TaskrViewModel() {
+    private val taskService: ITaskService,
+    logService: ILogService,
+    snackbarService: ISnackbarService
+): TaskrViewModel(logService, snackbarService) {
 
     var tasks = mutableStateListOf<Task>()
         private set

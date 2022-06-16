@@ -10,6 +10,8 @@ import com.bxsys.taskr.SIGN_IN_SCREEN
 import com.bxsys.taskr.SIGN_UP_SCREEN
 import com.bxsys.taskr.TaskrViewModel
 import com.bxsys.taskr.model.service.FirebaseUserService
+import com.bxsys.taskr.model.service.api.ILogService
+import com.bxsys.taskr.model.service.api.ISnackbarService
 import com.bxsys.taskr.model.service.api.IUserService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -30,8 +32,10 @@ interface ISignUpViewModel {
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val userService: IUserService
-): TaskrViewModel(), ISignUpViewModel {
+    private val userService: IUserService,
+    logService: ILogService,
+    snackbarService: ISnackbarService
+): TaskrViewModel(logService, snackbarService), ISignUpViewModel {
 
     override var email: String by mutableStateOf("")
     override var password: String by mutableStateOf("")
@@ -54,8 +58,10 @@ class SignUpViewModel @Inject constructor(
 
         viewModelScope.launch(showErrorExceptionHandler) {
             userService.signUp(email, password) { error ->
-                if (error != null) {
+                if (error == null) {
                     navFromTo(SIGN_UP_SCREEN, HOME_SCREEN)
+                } else {
+                    onError(error)
                 }
             }
         }

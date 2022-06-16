@@ -7,6 +7,8 @@ import com.bxsys.taskr.HOME_SCREEN
 import com.bxsys.taskr.SIGN_IN_SCREEN
 import com.bxsys.taskr.SIGN_UP_SCREEN
 import com.bxsys.taskr.TaskrViewModel
+import com.bxsys.taskr.model.service.api.ILogService
+import com.bxsys.taskr.model.service.api.ISnackbarService
 import com.bxsys.taskr.model.service.api.IUserService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -23,8 +25,10 @@ interface ISignInViewModel {
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val userService: IUserService
-) : TaskrViewModel(), ISignInViewModel {
+    private val userService: IUserService,
+    logService: ILogService,
+    snackbarService: ISnackbarService
+): TaskrViewModel(logService, snackbarService), ISignInViewModel {
 
     override var email by mutableStateOf("")
     override var password by mutableStateOf("")
@@ -39,11 +43,12 @@ class SignInViewModel @Inject constructor(
 
     override fun onSignInClick(navFromTo: (String, String) -> Unit) {
         userService.signIn(email, password) { error ->
-            if (error != null) {
+            if (error == null) {
                 navFromTo(SIGN_IN_SCREEN, HOME_SCREEN)
+            } else {
+                onError(error)
             }
 
-            // TODO Handle error.
         }
     }
 
@@ -60,5 +65,4 @@ class MockSignInViewModel: ISignInViewModel {
     override fun onPasswordChange(newVal: String) {}
     override fun onSignInClick(navFromTo: (String, String) -> Unit) {}
     override fun onSignUpClick(nav: (String) -> Unit) {}
-
 }

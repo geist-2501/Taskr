@@ -52,9 +52,9 @@ fun SignInScreen(
         ) {
             viewModel.onSignInClick(navFromTo)
         }
-        
+
         Spacer(modifier = Modifier.height(32.dp))
-        
+
         Text(text = "Don't have an account?", modifier = Modifier.padding(bottom = 8.dp))
         SecondaryButton(
             text = AppText.sign_up,
