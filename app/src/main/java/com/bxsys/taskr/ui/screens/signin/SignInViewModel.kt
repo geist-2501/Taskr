@@ -3,12 +3,11 @@ package com.bxsys.taskr.ui.screens.signin
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
 import com.bxsys.taskr.HOME_SCREEN
 import com.bxsys.taskr.SIGN_IN_SCREEN
 import com.bxsys.taskr.SIGN_UP_SCREEN
-import com.bxsys.taskr.TaskrViewModel
-import com.bxsys.taskr.model.service.api.ILogService
-import com.bxsys.taskr.model.service.api.ISnackbarService
+import com.bxsys.taskr.model.service.api.IErrorHandlerService
 import com.bxsys.taskr.model.service.api.IUserService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -26,9 +25,8 @@ interface ISignInViewModel {
 @HiltViewModel
 class SignInViewModel @Inject constructor(
     private val userService: IUserService,
-    logService: ILogService,
-    snackbarService: ISnackbarService
-): TaskrViewModel(logService, snackbarService), ISignInViewModel {
+    private val errorHandler: IErrorHandlerService
+): ViewModel(), ISignInViewModel {
 
     override var email by mutableStateOf("")
     override var password by mutableStateOf("")
@@ -46,7 +44,7 @@ class SignInViewModel @Inject constructor(
             if (error == null) {
                 navFromTo(SIGN_IN_SCREEN, HOME_SCREEN)
             } else {
-                onError(error)
+                errorHandler.onError(error)
             }
 
         }

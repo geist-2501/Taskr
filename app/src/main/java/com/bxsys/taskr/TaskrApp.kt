@@ -1,11 +1,8 @@
 package com.bxsys.taskr
 
-import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -20,13 +17,10 @@ import com.bxsys.taskr.ui.screens.home.HomeScreen
 import com.bxsys.taskr.ui.screens.signin.SignInScreen
 import com.bxsys.taskr.ui.screens.signup.SignUpScreen
 import com.bxsys.taskr.ui.screens.splash.SplashScreen
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.launch
 
 @Composable
 fun TaskrApp(
-    viewModel: TaskrRootViewModel = hiltViewModel()
+    viewModel: TaskrViewModel = hiltViewModel()
 ) {
     val navController = rememberNavController()
     val scaffoldState = rememberScaffoldState()

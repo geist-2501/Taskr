@@ -4,12 +4,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bxsys.taskr.HOME_SCREEN
 import com.bxsys.taskr.SIGN_IN_SCREEN
 import com.bxsys.taskr.SIGN_UP_SCREEN
 import com.bxsys.taskr.TaskrViewModel
 import com.bxsys.taskr.model.service.FirebaseUserService
+import com.bxsys.taskr.model.service.api.IErrorHandlerService
 import com.bxsys.taskr.model.service.api.ILogService
 import com.bxsys.taskr.model.service.api.ISnackbarService
 import com.bxsys.taskr.model.service.api.IUserService
@@ -33,9 +35,8 @@ interface ISignUpViewModel {
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val userService: IUserService,
-    logService: ILogService,
-    snackbarService: ISnackbarService
-): TaskrViewModel(logService, snackbarService), ISignUpViewModel {
+    private val errorHandler: IErrorHandlerService
+): ViewModel(), ISignUpViewModel {
 
     override var email: String by mutableStateOf("")
     override var password: String by mutableStateOf("")
@@ -56,12 +57,12 @@ class SignUpViewModel @Inject constructor(
     override fun onSignUpClick(navFromTo: (String, String) -> Unit) {
         // TODO Implement error handling and a snackbar.
 
-        viewModelScope.launch(showErrorExceptionHandler) {
+        viewModelScope.launch(errorHandler.showErrorExceptionHandler) {
             userService.signUp(email, password) { error ->
                 if (error == null) {
                     navFromTo(SIGN_UP_SCREEN, HOME_SCREEN)
                 } else {
-                    onError(error)
+                    errorHandler.onError(error)
                 }
             }
         }

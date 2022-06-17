@@ -1,9 +1,7 @@
-package com.bxsys.taskr.model.service
+package com.bxsys.taskr.model.service.module
 
-import com.bxsys.taskr.model.service.api.ILogService
-import com.bxsys.taskr.model.service.api.ISnackbarService
-import com.bxsys.taskr.model.service.api.ITaskService
-import com.bxsys.taskr.model.service.api.IUserService
+import com.bxsys.taskr.model.service.*
+import com.bxsys.taskr.model.service.api.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -26,4 +24,7 @@ abstract class ServiceModule {
 
     @Binds
     abstract fun provideLogService(impl: FirebaseLogService): ILogService
+
+    @Binds
+    abstract fun provideErrorHandlerService(impl: CrashlyticsErrorHandlerService): IErrorHandlerService
 }

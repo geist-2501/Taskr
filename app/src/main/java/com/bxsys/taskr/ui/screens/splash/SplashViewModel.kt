@@ -1,5 +1,6 @@
 package com.bxsys.taskr.ui.screens.splash
 
+import androidx.lifecycle.ViewModel
 import com.bxsys.taskr.HOME_SCREEN
 import com.bxsys.taskr.SIGN_IN_SCREEN
 import com.bxsys.taskr.SPLASH_SCREEN
@@ -16,10 +17,8 @@ interface ISplashViewModel {
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val userService: IUserService,
-    logService: ILogService,
-    snackbarService: ISnackbarService
-): TaskrViewModel(logService, snackbarService), ISplashViewModel {
+    private val userService: IUserService
+): ViewModel(), ISplashViewModel {
 
     override fun onAppStart(navFromTo: (String, String) -> Unit) {
         if (userService.hasUser()) navFromTo(SPLASH_SCREEN, HOME_SCREEN)
